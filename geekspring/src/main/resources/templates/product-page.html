@@ -5,15 +5,17 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
-  <title>Material Design Bootstrap</title>
+  <title>Продукт: </title>
+  <link rel="icon" type="image/png" th:href="@{../favicon.ico}"/>
+
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
   <!-- Bootstrap core CSS -->
-  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link type="text/css" rel="stylesheet" th:href="@{../css/bootstrap.min.css}">
   <!-- Material Design Bootstrap -->
-  <link href="css/mdb.min.css" rel="stylesheet">
+  <link type="text/css" rel="stylesheet" th:href="@{../css/mdb.min.css}">
   <!-- Your custom styles (optional) -->
-  <link href="css/style.min.css" rel="stylesheet">
+  <link type="text/css" rel="stylesheet" th:href="@{../css/style.min.css}">
 </head>
 
 <body>
@@ -21,10 +23,12 @@
   <!-- Navbar -->
   <nav class="navbar fixed-top navbar-expand-lg navbar-light white scrolling-navbar">
     <div class="container">
+
       <!-- Brand -->
       <a class="/">
-        <strong class="blue-text">MDB</strong>
+        <strong class="blue-text">GeekMarket&nbsp; | &nbsp;</strong>
       </a>
+
       <div th:replace="~{top-navigation :: navigation(Product)}" />
 
     </div>

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
     <meta charset="utf-8">
@@ -51,32 +52,52 @@
 
         <!-- Left -->
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item" th:classappend="${activeTab == 'Home' ? 'active' : ''}">
-                <a class="nav-link waves-effect" href="/">Главная
+            <li class="nav-item" th:classappend="${activeTab == 'Shop' ? 'active' : ''}">
+                <a class="nav-link waves-effect" th:href="@{/shop}">Товары
                     <span class="sr-only">(current)</span>
                 </a>
             </li>
-            <li class="nav-item" th:classappend="${activeTab == 'Catalog' ? 'active' : ''}">
-                <a class="nav-link waves-effect" href="/catalog">Каталог</a>
-            </li>
-            <li class="nav-item" th:classappend="${activeTab == 'RegistrationForm' ? 'active' : ''}">
-                <a class="nav-link waves-effect" href="/register/showRegistrationForm">Регистрация</a>
+            <li sec:authorize="hasRole('ADMIN')" class="nav-item" th:classappend="${activeTab == 'Catalog' ? 'active' : ''}">
+                <a class="nav-link waves-effect" th:href="@{/admin}">Админка</a>
             </li>
         </ul>
 
         <!-- Right -->
         <ul class="navbar-nav nav-flex-icons">
-            <li class="nav-item">
-                <a class="nav-link waves-effect">
+            <li class="nav-item" th:classappend="${activeTab == 'Cart' ? 'active' : ''}">
+                <a class="nav-link waves-effect" th:href="@{/cart}">
                     <span class="badge red z-depth-1 mr-1"> 1 </span>
                     <i class="fas fa-shopping-cart"></i>
                     <span class="clearfix d-none d-sm-inline-block"> Корзина </span>
                 </a>
             </li>
             <li class="nav-item">
-                <a href="#" class="nav-link border border-light rounded waves-effect">
-                    <i class="fab fa-github mr-2"></i>Личный кабинет
+                <strong class="blue-text">&nbsp;</strong>
+            </li>
+
+            <!-- No Authorization -->
+            <li sec:authorize="isAnonymous()" class="nav-item">
+                <a href="/login" class="nav-link border border-light rounded waves-effect">
+                    <i class="fas fa-sign-in-alt"></i>Войти
                 </a>
+            </li>
+            <li sec:authorize="isAnonymous()" class="nav-item" th:classappend="${activeTab == 'RegistrationForm' ? 'active' : ''}">
+                <a class="nav-link waves-effect" href="/register/showRegistrationForm">
+                    <i class="far fa-registered"></i>
+                    <span class="clearfix d-none d-sm-inline-block"> Регистрация </span>
+                </a>
+            </li>
+
+            <!--is Authorization -->
+            <li sec:authorize="isAuthenticated()" class="nav-item">
+                <a href="#" class="nav-link border border-light rounded waves-effect">
+                    <i class="fas fa-sign-in-alt"></i>Профиль
+                </a>
+            </li>
+            <li sec:authorize="isAuthenticated()" class="nav-item" th:classappend="${activeTab == 'RegistrationForm' ? 'active' : ''}">
+                <form th:action="@{/logout}" method="POST">
+                    <button class="btn btn-primary btn-sm" type="submit">Выйти</button>
+                </form>
             </li>
         </ul>
     </div>

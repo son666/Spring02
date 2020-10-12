@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Управление Магазином</title>
+    <link rel="icon" type="image/png" th:href="@{../favicon.ico}"/>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+    <!-- Bootstrap core CSS -->
+    <link type="text/css" rel="stylesheet" th:href="@{/admin/css/bootstrap.min.css}">
+    <!-- Material Design Bootstrap -->
+    <link type="text/css" rel="stylesheet" th:href="@{/admin/css/mdb.min.css}">
+    <!-- Your custom styles (optional) -->
+    <link type="text/css" rel="stylesheet" th:href="@{/admin/css/style.min.css}">
+    <style>
+
+    .map-container{
+overflow:hidden;
+padding-bottom:56.25%;
+position:relative;
+height:0;
+}
+.map-container iframe{
+left:0;
+top:0;
+height:100%;
+width:100%;
+position:absolute;
+}
+  </style>
+</head>
+
+<body class="grey lighten-3">
+<!-- Links -->
+<div class="collapse navbar-collapse" id="navbarSupportedContent" th:fragment="navigation(activeTab)">
+
+    <!-- Left -->
+    <ul class="navbar-nav mr-auto">
+        <li class="nav-item" th:classappend="${activeTab == 'Shop' ? 'active' : ''}">
+            <a class="nav-link waves-effect" th:href="@{/admin}">Товары
+                <span class="sr-only">(current)</span>
+            </a>
+        </li>
+        <li class="nav-item" th:classappend="${activeTab == 'Categories' ? 'active' : ''}">
+            <a class="nav-link waves-effect" th:href="@{/admin/categories}">Категории</a>
+        </li>
+        <li class="nav-item" th:classappend="${activeTab == 'Users' ? 'active' : ''}">
+            <a class="nav-link waves-effect" th:href="@{/admin/users}">Пользователи</a>
+        </li>
+        <li class="nav-item" th:classappend="${activeTab == 'Roles' ? 'active' : ''}">
+            <a class="nav-link waves-effect" th:href="@{/admin/roles}">Роли</a>
+        </li>
+        <li class="nav-item" th:classappend="${activeTab == 'Orders' ? 'active' : ''}">
+            <a class="nav-link waves-effect" th:href="@{/admin/orders}">Заказы</a>
+        </li>
+        <li class="nav-item" th:classappend="${activeTab == 'Statuses' ? 'active' : ''}">
+            <a class="nav-link waves-effect" th:href="@{/admin/order_statuses}">Статусы</a>
+        </li>
+    </ul>
+
+    <!-- Right -->
+    <ul class="navbar-nav nav-flex-icons">
+        <li class="nav-item">
+            <a href="/" class="nav-link border border-light rounded waves-effect">
+                <i class="fas fa-sign-out-alt"></i>В магазин
+            </a>
+        </li>
+    </ul>
+
+</div>
+</body>
+</html>
