@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="ctx" th:content="${#httpServletRequest.getContextPath()}"/>
+    <title>Корзина</title>
+    <!-- MDB icon -->
+    <link rel="icon" type="image/png" th:href="@{/favicon.ico}"/>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+    <!-- Bootstrap core CSS -->
+    <link type="text/css" rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <!-- Material Design Bootstrap -->
+    <link type="text/css" rel="stylesheet" th:href="@{/css/mdb.min.css}">
+    <!-- Your custom styles (optional) -->
+    <link type="text/css" rel="stylesheet" th:href="@{/css/style.css}">
+
+  </head>
+
+  <body>
+
+  <!-- Navbar -->
+  <nav class="navbar fixed-top navbar-expand-lg navbar-light white scrolling-navbar">
+    <div class="container">
+
+      <!-- Brand -->
+      <a class="/">
+        <strong class="blue-text">GeekMarket&nbsp; | &nbsp;</strong>
+      </a>
+
+      <div th:replace="~{top-navigation :: navigation(Cart)}" />
+
+    </div>
+  </nav>
+  <!-- Navbar -->
+
+  <!--Main layout-->
+  <main class="mt-5 pt-4">
+    <div class="container my-5 py-3 z-depth-1 rounded">
+
+      <br>
+      <h1>Корзина</h1>
+
+      <!--Section: Content-->
+      <section class="dark-grey-text">
+
+        <!-- Shopping Cart table -->
+        <div class="table-responsive" th:if="${cart.getItems().size() > 0}">
+
+          <table class="table product-table mb-0">
+
+            <!-- Table head -->
+            <thead class="mdb-color lighten-5">
+              <tr>
+                <th></th>
+                <th class="font-weight-bold">
+                  <strong>Название товара</strong>
+                </th>
+                <th></th>
+                <th class="font-weight-bold">
+                  <strong>Цена</strong>
+                </th>
+                <th class="font-weight-bold">
+                  <strong>Кол-во</strong>
+                </th>
+                <th class="font-weight-bold">
+                  <strong>Сумма</strong>
+                </th>
+                <th></th>
+              </tr>
+            </thead>
+            <!-- /.Table head -->
+
+            <!-- Table body -->
+            <tbody>
+
+              <!-- First row -->
+              <tr th:each="cartItem, itrStat : ${cart.getItems()}">
+                <th scope="row">
+                  <img th:if="${cartItem.product.images.size() > 0}" th:src="@{'/images/' + ${cartItem.product.images[0].path}}" class="img-fluid z-depth-0">
+                </th>
+                <td>
+                  <h5 class="mt-3">
+                    <strong th:text="${cartItem.product.title}"></strong>
+                  </h5>
+                </td>
+                <td></td>
+                <td th:text="${cartItem.itemPrice}"></td>
+                <td>
+                  <input type="number" th:value="${cartItem.quantity}" aria-label="Search" class="form-control" disabled style="width: 90px">
+                </td>
+                <td class="font-weight-bold">
+                  <strong th:text="${cartItem.totalPrice}"></strong>
+                </td>
+                <td>
+                  <button type="button" class="btn btn-sm btn-primary" data-toggle="tooltip" data-placement="top" title="Remove item">X
+                  </button>
+                </td>
+              </tr>
+              <!-- /.First row -->
+
+              <!-- Fourth row -->
+              <tr>
+                <td colspan="2"></td>
+                <td>
+                  <h4 class="mt-2">
+                    <strong>Итого:</strong>
+                  </h4>
+                </td>
+                <td class="text-right">
+                  <h4 class="mt-2">
+                    <strong th:text="${cart.totalCost}"></strong>
+                  </h4>
+                </td>
+                <td colspan="2" class="text-right">
+                    <a sec:authorize="isAuthenticated()" th:href="@{/shop/order/fill}" class="btn btn-primary btn-rounded p-2">Оформить заказ
+                      <i class="fas fa-angle-right right"></i>
+                    </a>
+
+
+                    <div class="modal fade" id="modalLoginForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                      <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                          <form th:action="@{/authenticateTheUser}" method="POST" class="form-horizontal">
+                              <div class="modal-header text-center">
+                                <h4 class="modal-title w-100 font-weight-bold">Sign in</h4>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                              </div>
+                              <div class="modal-body mx-3">
+                                <div class="md-form mb-5">
+                                  <input type="text" name="username" id="defaultForm-login" class="form-control validate">
+                                  <label data-error="wrong" data-success="right" for="defaultForm-login">Your login</label>
+                                </div>
+
+                                <div class="md-form mb-4">
+                                  <input type="password" name="password"  id="defaultForm-pass" class="form-control validate">
+                                  <label data-error="wrong" data-success="right" for="defaultForm-pass">Your password</label>
+                                </div>
+
+                              </div>
+                              <div class="modal-footer d-flex justify-content-center">
+                                <button type="submit" class="btn btn-default">Войти</button>
+                              </div>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                    <a sec:authorize="isAnonymous()" href="" class="btn btn-primary btn-rounded p-2" data-toggle="modal" data-target="#modalLoginForm">Оформить заказ
+                    <i class="fas fa-angle-right right"></i>
+                    </a>
+                </td>
+              </tr>
+              <!-- Fourth row -->
+
+            </tbody>
+            <!-- /.Table body -->
+
+          </table>
+
+        </div>
+        <!-- /.Shopping Cart table -->
+
+        <div th:unless="${cart.getItems().size() > 0}" >
+          <span>Ваша корзина пуста</span>
+        </div>
+
+
+      </section>
+      <!--Section: Content-->
+
+
+    </div>
+  </main>
+
+  <!--Footer-->
+  <footer class="page-footer text-center font-small mt-4 wow fadeIn">
+
+    <hr class="my-4">
+
+    <!-- Social icons -->
+    <div class="pb-4">
+      <a href="#">
+        <i class="fab fa-facebook-f mr-3"></i>
+      </a>
+
+      <a href="#">
+        <i class="fab fa-twitter mr-3"></i>
+      </a>
+
+      <a href="#">
+        <i class="fab fa-youtube mr-3"></i>
+      </a>
+
+      <a href="#">
+        <i class="fab fa-google-plus-g mr-3"></i>
+      </a>
+
+      <a href="#">
+        <i class="fab fa-dribbble mr-3"></i>
+      </a>
+
+      <a href="#">
+        <i class="fab fa-pinterest mr-3"></i>
+      </a>
+
+      <a href="#">
+        <i class="fab fa-github mr-3"></i>
+      </a>
+
+      <a href="#">
+        <i class="fab fa-codepen mr-3"></i>
+      </a>
+    </div>
+    <!-- Social icons -->
+
+    <!--Copyright-->
+    <div class="footer-copyright py-3">
+      © 2020 Copyright:
+      <a href="#" target="_blank"> GeekBrains.com </a>
+    </div>
+    <!--/.Copyright-->
+
+  </footer>
+  <!--/.Footer-->
+
+
+    <!-- jQuery -->
+  <script type="text/javascript" th:src="@{/js/jquery-3.4.1.min.js}"></script>
+  <!-- Bootstrap tooltips -->
+  <script type="text/javascript" th:src="@{/js/popper.min.js}"></script>
+  <!-- Bootstrap core JavaScript -->
+  <script type="text/javascript" th:src="@{/js/bootstrap.min.js}"></script>
+  <!-- MDB core JavaScript -->
+  <script type="text/javascript" th:src="@{/js/mdb.min.js}"></script>
+
+  </body>
+
+</html>
