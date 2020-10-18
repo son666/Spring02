@@ -29,6 +29,7 @@ public class ShoppingCartService {
         session.removeAttribute("cart");
     }
 
+    //Work Method
     public void addToCart(HttpSession session, Long productId) {
         Product product = productService.getProductById(productId);
         addToCart(session, product);
