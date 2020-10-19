@@ -205,6 +205,11 @@
   <main>
     <div class="container">
 
+      <br>
+      <button id="connect" onclick="connect();">Connect</button>
+      <!--<button id="sendName" onclick="sendName();">Send</button>-->
+      <input id="resultInput" type="text" size="40">
+
       <!--Фильтры-->
       <br>
       <h1 th:text="Фильтры" />
@@ -301,7 +306,7 @@
                   <strong th:text="${product.price}"></strong>
                 </h4>
 
-                <a th:href="@{'/shop/cart/add/' + ${product.id}}" class="btn btn-primary">В корзину</a>
+                <a th:href="@{'/shop/cart/add/' + ${product.id}}" class="btn btn-primary" onclick="sendName()">В корзину</a>
 
               </div>
               <!--Card content-->
@@ -400,5 +405,9 @@
     new WOW().init();
 
   </script>
+  <!--Script for work Web Socket-->
+  <script type="text/javascript" th:src="@{https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.js}"></script>
+  <script type="text/javascript" th:src="@{https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.4.0/sockjs.js}"></script>
+  <script type="text/javascript" th:src="@{/js/scriptWebSocket.js}"></script>
 </body>
 </html>
