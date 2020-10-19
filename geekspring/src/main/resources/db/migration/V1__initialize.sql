@@ -134,6 +134,17 @@ CREATE TABLE orders_item (
   REFERENCES products (id)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8;
 
+DROP TABLE IF EXISTS logs;
+
+CREATE TABLE logs (
+  id                     INT(11) NOT NULL AUTO_INCREMENT,
+  date_log              VARCHAR(45) NOT NULL,
+  message                VARCHAR(1000) NOT NULL,
+  level_log              VARCHAR(45) NOT NULL,
+  service_name           VARCHAR(45) NOT NULL,
+  PRIMARY KEY (id)
+) ENGINE = InnoDB DEFAULT CHARSET = utf8;
+
 SET FOREIGN_KEY_CHECKS = 1;
 
 INSERT INTO roles (name)
