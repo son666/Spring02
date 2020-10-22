@@ -7,11 +7,17 @@ function connect() {
     stompClient = Stomp.over(socket);
     stompClient.connect({}, function(frame) {
         console.log('Connected: ' + frame);
+        getTotalOrderItems();
         stompClient.subscribe('/topic/totalOrderItems', function(greeting){
             showGreeting(JSON.parse(greeting.body).content);
             showTotalOrderItems(JSON.parse(greeting.body).totalOrderItems);
         });
     });
+}
+
+function getTotalOrderItems() {
+    var name = 'getCurrentOrderTotalItems';
+    stompClient.send("/app/getTotalOrderItems", {}, JSON.stringify({ 'name': name }));
 }
 
 function sendName() {

@@ -29,10 +29,15 @@ public class ShopControllerWs {
     @MessageMapping("/getTotalOrderItems")
     @SendTo("/topic/totalOrderItems")
     public Greeting getTotalOrderItems(SimpMessageHeaderAccessor headerAccessor, @RequestBody Message message) throws Exception {
-        Thread.sleep(1000); // simulated delay
         HttpSession session = shoppingCartService.getSession();
         int totalOrderItemsInCart = shoppingCartService.getCurrentCart(session).getTotalOrderItems();
-        Greeting cartItems = new Greeting(message.getName() + " добавлен в коризну!", totalOrderItemsInCart);
+        Greeting cartItems = null;
+        if (!message.getName().equals("getCurrentOrderTotalItems")) {
+            Thread.sleep(1000); // simulated delay
+            cartItems = new Greeting(message.getName() + " добавлен в коризну!", totalOrderItemsInCart);
+        } else {
+            cartItems = new Greeting("", totalOrderItemsInCart);
+        }
         return cartItems;
     }
 }
