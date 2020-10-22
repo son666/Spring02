@@ -10,10 +10,15 @@ import javax.servlet.http.HttpSession;
 @Service
 public class ShoppingCartService {
     private ProductService productService;
+    private HttpSession session;
 
     @Autowired
     public void setProductService(ProductService productService) {
         this.productService = productService;
+    }
+
+    public HttpSession getSession() {
+        return session;
     }
 
     public ShoppingCart getCurrentCart(HttpSession session) {
@@ -31,6 +36,7 @@ public class ShoppingCartService {
 
     //Work Method
     public void addToCart(HttpSession session, Long productId) {
+        this.session = session;
         Product product = productService.getProductById(productId);
         addToCart(session, product);
     }
