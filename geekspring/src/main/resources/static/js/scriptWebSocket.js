@@ -9,7 +9,7 @@ function connect() {
         console.log('Connected: ' + frame);
         getTotalOrderItems();
         stompClient.subscribe('/topic/totalOrderItems', function(greeting){
-            showGreeting(JSON.parse(greeting.body).content);
+//            showGreeting(JSON.parse(greeting.body).content);
             showTotalOrderItems(JSON.parse(greeting.body).totalOrderItems);
         });
     });
@@ -20,10 +20,6 @@ function getTotalOrderItems() {
     stompClient.send("/app/getTotalOrderItems", {}, JSON.stringify({ 'name': name }));
 }
 
-function sendName() {
-    var name = 'товар';
-    stompClient.send("/app/getTotalOrderItems", {}, JSON.stringify({ 'name': name }));
-}
 
 function showGreeting(message) {
     console.log(message);

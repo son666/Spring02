@@ -5,8 +5,11 @@ public class Greeting {
     private String content;
     private int totalOrderItems;
 
-    public Greeting(String content, int totalOrderItems) {
+    public Greeting(String content) {
         this.content = content;
+    }
+
+    public Greeting(int totalOrderItems) {
         this.totalOrderItems = totalOrderItems;
     }
 

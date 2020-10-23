@@ -205,10 +205,9 @@
   <main>
     <div class="container">
 
-      <br>
-      <button id="connect" onclick="connect();">Connect</button>
-      <!--<button id="sendName" onclick="sendName();">Send</button>-->
-      <input id="resultInput" type="text" size="40">
+<!--      <br>-->
+<!--      <button id="sendName" onclick="sendName();">Send</button>-->
+<!--      <input id="resultInput" type="text" size="40">-->
 
       <!--Фильтры-->
       <br>
@@ -306,7 +305,7 @@
                   <strong th:text="${product.price}"></strong>
                 </h4>
 
-                <a th:href="@{'/shop/cart/add/' + ${product.id}}" class="btn btn-primary" onclick="sendName()">В корзину</a>
+                <a th:href="@{'/shop/cart/add/' + ${product.id}}" class="btn btn-primary">В корзину</a>
 
               </div>
               <!--Card content-->
