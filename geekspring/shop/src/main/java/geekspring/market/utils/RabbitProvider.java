@@ -4,6 +4,7 @@ import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
 import com.rabbitmq.client.DeliverCallback;
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
 import java.io.IOException;
 
@@ -12,6 +13,7 @@ public class RabbitProvider {
     private static final String QUEUE_NAME = "fail_login";
     private Channel channel;
     private Connection connection;
+    private Logger marketLogger = Logger.getLogger("market");
 
     public void openConnect() {
         ConnectionFactory factory = new ConnectionFactory();
@@ -31,7 +33,7 @@ public class RabbitProvider {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        System.out.println("sent " + msg);
+        System.out.println("Sent message \"" + msg + "\" into queue \"" + QUEUE_NAME + "\"");
     }
 
     public void receiverMsg() {
@@ -40,8 +42,8 @@ public class RabbitProvider {
             factory.setHost("localhost");
             channel.queueDeclare(QUEUE_NAME, false, false, false, null);
             final DeliverCallback deliverCallback = (consumerTag, delivery) -> {
-                String msg = new String(delivery.getBody(), "UTF-8");
-                System.out.println("Reciver " + msg);
+                String message = new String(delivery.getBody(), "UTF-8");
+                marketLogger.info(message);
             };
             channel.basicConsume(QUEUE_NAME, true, deliverCallback, consumerTag -> {});
         } catch (Exception e) {

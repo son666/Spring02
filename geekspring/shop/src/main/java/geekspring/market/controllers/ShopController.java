@@ -35,12 +35,6 @@ public class ShopController {
     private ProductService productService;
     private ShoppingCartService shoppingCartService;
     private DeliveryAddressService deliverAddressService;
-    private RabbitProvider rabbitProvider;
-
-    @Autowired
-    public void setRabbitProvider(RabbitProvider rabbitProvider) {
-        this.rabbitProvider = rabbitProvider;
-    }
 
     @Autowired
     private Products productsClientService;
@@ -106,8 +100,6 @@ public class ShopController {
     public String addProductToCart(Model model, @PathVariable("id") Long id, HttpServletRequest httpServletRequest) {
         shoppingCartService.addToCart(httpServletRequest.getSession(), id);
         String referrer = httpServletRequest.getHeader("referer");
-        rabbitProvider.openConnect();
-        rabbitProvider.sendMsg("Добавлен продукт " + id);
         return "redirect:" + referrer;
     }
 
