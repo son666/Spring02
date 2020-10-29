@@ -8,6 +8,7 @@ import geekspring.market.repositories.specifications.ProductSpecs;
 import geekspring.market.services.*;
 import geekspring.market.utils.FilterProducts;
 import geekspring.market.utils.PageProducts;
+import geekspring.market.utils.RabbitProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.domain.Specification;
@@ -34,10 +35,15 @@ public class ShopController {
     private ProductService productService;
     private ShoppingCartService shoppingCartService;
     private DeliveryAddressService deliverAddressService;
+    private RabbitProvider rabbitProvider;
+
+    @Autowired
+    public void setRabbitProvider(RabbitProvider rabbitProvider) {
+        this.rabbitProvider = rabbitProvider;
+    }
 
     @Autowired
     private Products productsClientService;
-
 
     @Autowired
     public void setProductService(ProductService productService) {
@@ -100,6 +106,8 @@ public class ShopController {
     public String addProductToCart(Model model, @PathVariable("id") Long id, HttpServletRequest httpServletRequest) {
         shoppingCartService.addToCart(httpServletRequest.getSession(), id);
         String referrer = httpServletRequest.getHeader("referer");
+        rabbitProvider.openConnect();
+        rabbitProvider.sendMsg("Добавлен продукт " + id);
         return "redirect:" + referrer;
     }
 
