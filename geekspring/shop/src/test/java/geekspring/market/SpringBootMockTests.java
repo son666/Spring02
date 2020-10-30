@@ -38,7 +38,13 @@ public class SpringBootMockTests {
         mockMvc.perform(get("/shop"))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(xpath("/html/body/main/div/section/div/div[1]/div/div[2]/p").exists());
+                .andExpect(content().string(org.hamcrest.core.StringContains.containsString("Телевизор Samsung UE20NU7170U")));
+    }
+
+    @Test
+    public void checkProductPage() throws Exception {
+        mockMvc.perform(get("/shop/product/{id}", 2))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.title").exists());
     }
 
 }

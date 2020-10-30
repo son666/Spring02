@@ -297,7 +297,7 @@
                 <!--Category & Title-->
                 <h5>
                   <strong>
-                    <a th:text="${product.title}" th:href="@{'/shop/product/' + ${product.id}}" class="dark-grey-text"></a>
+                    <a th:if="${product.title != null}" th:text="${product.title}" th:href="@{'/shop/product/' + ${product.id}}" class="dark-grey-text"></a>
                   </strong>
                 </h5>
 
@@ -305,7 +305,7 @@
                   <strong th:text="${product.price}"></strong>
                 </h4>
                 <hr/>
-                <p th:if="${product.quantity > 0}" th:text="'Доступно: ' + ${product.quantity}" class="font-weight-bold"></p>
+                <p th:text="'Доступно: ' + ${product.quantity}" class="font-weight-bold"></p>
 
                 <a id="btnAddInCart" th:href="@{'/shop/cart/add/' + ${product.id}}" class="btn btn-primary">В корзину</a>
 
