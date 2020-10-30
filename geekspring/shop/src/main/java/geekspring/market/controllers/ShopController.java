@@ -96,6 +96,12 @@ public class ShopController {
         return "shop-page";
     }
 
+    @GetMapping("/product/{id}")
+    public String productPage(Model model, @PathVariable("id") Long id) {
+        model.addAttribute("product", productService.getProductById(id));
+        return "product-page";
+    }
+
     @GetMapping("/cart/add/{id}")
     public String addProductToCart(Model model, @PathVariable("id") Long id, HttpServletRequest httpServletRequest) {
         shoppingCartService.addToCart(httpServletRequest.getSession(), id);

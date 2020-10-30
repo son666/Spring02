@@ -286,7 +286,7 @@
               <!--Card image-->
               <div class="view overlay">
                 <img th:if="${product.images.size() > 0}" th:src="@{'/images/' + ${product.images[0].path}}" class="card-img-top" alt="">
-                <a th:href="@{/product-page}">
+                <a th:href="@{'/shop/product/' + ${product.id}}">
                   <div class="mask rgba-white-slight"></div>
                 </a>
               </div>
@@ -297,7 +297,7 @@
                 <!--Category & Title-->
                 <h5>
                   <strong>
-                    <a th:text="${product.title}" href="/products" class="dark-grey-text"></a>
+                    <a th:text="${product.title}" th:href="@{'/shop/product/' + ${product.id}}" class="dark-grey-text"></a>
                   </strong>
                 </h5>
 
