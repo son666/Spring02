@@ -24,7 +24,7 @@ public class CustomAuthenticationFailureHandler implements AuthenticationFailure
 
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException authentication) throws IOException, ServletException {
-        String userName = "Alex";
+        String userName = request.getParameter("username");
 
         rabbitProvider.openConnect();
         rabbitProvider.sendMsg("Fail login userName: " + userName);

@@ -10,7 +10,7 @@ import java.io.IOException;
 
 @Component
 public class RabbitProvider {
-    private static final String QUEUE_NAME = "fail_login";
+    private static final String QUEUE_NAME = "auth-err";
     private Channel channel;
     private Connection connection;
     private Logger marketLogger = Logger.getLogger("market");
