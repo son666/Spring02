@@ -141,6 +141,12 @@ position:absolute;
                 <small class="error" th:if="${#fields.hasErrors('vendorCode')}" th:errors="*{vendorCode}"></small>
               </div>
 
+              <!-- Quantity -->
+              <div class="form-row mb-4">
+                <input th:field="*{quantity}" type="text" placeholder="Количество" class="form-control" >
+                <small class="error" th:if="${#fields.hasErrors('quantity')}" th:errors="*{quantity}"></small>
+              </div>
+
               <!-- Short description -->
               <div class="form-row mb-4">
                 <input th:field="*{shortDescription}" th:rows="3" type="text" class="form-control" placeholder="Краткое описание" >

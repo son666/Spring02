@@ -61,6 +61,9 @@ public class Product implements Serializable {
     @UpdateTimestamp
     private LocalDateTime updateAt;
 
+    @Column(name = "quantity")
+    private Long quantity;
+
     public void addImage(ProductImage productImage) {
         if (images == null) {
             images = new ArrayList<>();
