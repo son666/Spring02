@@ -8,6 +8,7 @@ import geekspring.market.repositories.specifications.ProductSpecs;
 import geekspring.market.services.*;
 import geekspring.market.utils.FilterProducts;
 import geekspring.market.utils.PageProducts;
+import geekspring.market.utils.RabbitProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.domain.Specification;
@@ -37,7 +38,6 @@ public class ShopController {
 
     @Autowired
     private Products productsClientService;
-
 
     @Autowired
     public void setProductService(ProductService productService) {
