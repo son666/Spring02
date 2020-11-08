@@ -134,6 +134,7 @@ public class ShopController {
         order.setDeliveryDate(LocalDateTime.now().plusDays(7));
         order.setDeliveryPrice(0.0);
         order = orderService.saveOrder(order);
+        mailService.sendOrderMail(order);
         model.addAttribute("order", order);
         return "checkout-page";
     }
@@ -149,7 +150,6 @@ public class ShopController {
         if (!user.getId().equals(confirmedOrder.getUser().getId())) {
             return "redirect:/";
         }
-        mailService.sendOrderMail(confirmedOrder);
         model.addAttribute("order", confirmedOrder);
         return "order-result";
     }
