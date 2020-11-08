@@ -115,7 +115,7 @@ position:absolute;
               <td th:text="${role.id}"/>
               <td th:text="${role.name}"/>
               <td>
-                <a th:href="@{'/users/deleteRole/' + ${role.id}}" class="btn btn-primary btn-sm">Убрать роль</a>
+                <a th:href="@{'/users/deleteRole/' + ${role.id} + '/' + ${user.id}}" class="btn btn-primary btn-sm">Убрать роль</a>
               </td>
 
             </tr>

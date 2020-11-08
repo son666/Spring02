@@ -1,5 +1,6 @@
 package geekspring.market.services;
 
+import geekspring.market.config.MailConfig;
 import geekspring.market.entites.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailException;
@@ -14,9 +15,15 @@ import java.util.concurrent.Executors;
 
 @Service
 public class MailService {
+    private MailConfig mailConfig;
     private JavaMailSender sender;
     private MailMessageBuilder messageBuilder;
     private final ExecutorService executorService = Executors.newSingleThreadExecutor();
+
+    @Autowired
+    public void setMailConfig(MailConfig mailConfig) {
+        this.mailConfig = mailConfig;
+    }
 
     @Autowired
     public void setSender(JavaMailSender sender) {
@@ -36,6 +43,7 @@ public class MailService {
             helper.setTo(email);
             helper.setText(text, true);
             helper.setSubject(subject);
+            helper.setFrom(mailConfig.getUsername());
         } catch (MessagingException e) {
             e.printStackTrace();
         }

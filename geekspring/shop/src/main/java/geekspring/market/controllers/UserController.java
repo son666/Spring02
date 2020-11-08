@@ -69,23 +69,32 @@ public class UserController {
         return "redirect:/users/roles/" + user.getId();
     }
 
+    @GetMapping("/deleteRole/{id}/{userId}")
+    public String processUserAddForm(Model model, @PathVariable(name = "id") Long id, @PathVariable(name = "userId") Long userId) {
+        Role removeRole = roleService.getRoleById(id);
+        User user = userService.getUserById(userId);
+        Collection<Role> rolesUser = user.getRoles();
+        rolesUser.remove(removeRole);
+        user.setRoles(rolesUser);
+        userService.updateUser(user);
+        return "redirect:/users/roles/" + user.getId();
+    }
+
     @GetMapping("/edit/{id}")
     public String edit(Model model, @PathVariable(name = "id") Long id) {
         User user = userService.getUserById(id);
-        if (user == null) {
-            user = new User();
-            user.setId(0L);
-        }
-        model.addAttribute("systemUser", user);
+        model.addAttribute("user", user);
         return "/admin-edit-user";
     }
 
     @PostMapping("/edit")
-    public String processUserAddForm(@Valid @ModelAttribute("user") SystemUser user, BindingResult theBindingResult, Model model) {
-        if (userService.isUserWithUserNameExists(user.getUserName())) {
-            theBindingResult.addError(new ObjectError("status.title", "Пользователь с таким UserName уже существует")); // todo не отображает сообщение
+    public String processUserAddForm(@Valid @ModelAttribute("user") User user, BindingResult theBindingResult, Model model) {
+        if (!userService.isUserWithUserNameExists(user.getUserName())) {
+            theBindingResult.addError(new ObjectError("status.title", "Пользователь с таким UserName не существует")); // todo не отображает сообщение
         }
-        userService.save(user);
+        Collection<Role> roleUser = (userService.getUserById(user.getId())).getRoles();
+        user.setRoles(roleUser);
+        userService.updateUser(user);
         return "redirect:/admin/users";
     }
 
