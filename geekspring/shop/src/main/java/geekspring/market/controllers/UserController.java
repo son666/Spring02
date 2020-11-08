@@ -69,6 +69,17 @@ public class UserController {
         return "redirect:/users/roles/" + user.getId();
     }
 
+    @GetMapping("/deleteRole/{id}/{userId}")
+    public String processUserAddForm(Model model, @PathVariable(name = "id") Long id, @PathVariable(name = "userId") Long userId) {
+        Role removeRole = roleService.getRoleById(id);
+        User user = userService.getUserById(userId);
+        Collection<Role> rolesUser = user.getRoles();
+        rolesUser.remove(removeRole);
+        user.setRoles(rolesUser);
+        userService.updateUser(user);
+        return "redirect:/users/roles/" + user.getId();
+    }
+
     @GetMapping("/edit/{id}")
     public String edit(Model model, @PathVariable(name = "id") Long id) {
         User user = userService.getUserById(id);
@@ -81,6 +92,8 @@ public class UserController {
         if (!userService.isUserWithUserNameExists(user.getUserName())) {
             theBindingResult.addError(new ObjectError("status.title", "Пользователь с таким UserName не существует")); // todo не отображает сообщение
         }
+        Collection<Role> roleUser = (userService.getUserById(user.getId())).getRoles();
+        user.setRoles(roleUser);
         userService.updateUser(user);
         return "redirect:/admin/users";
     }
