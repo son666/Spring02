@@ -78,7 +78,6 @@ public class UserServiceImpl implements UserService {
         User user = new User();
 
         if (findByUserName(systemUser.getUserName()) != null) {
-            userRepository.save(systemUser);
             return false;
         }
 
@@ -96,12 +95,18 @@ public class UserServiceImpl implements UserService {
     }
 
     @Transactional
+    public boolean updateUser(User user) {
+
+        userRepository.save(user);
+        return true;
+    }
+
+    @Transactional
     public boolean saveRole(User user) {
 
         if (findByUserName(user.getUserName()) != null) {
             return false;
         }
-
         userRepository.save(user);
         return true;
     }

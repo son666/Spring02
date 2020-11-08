@@ -24,7 +24,11 @@ public class AopLoggerUserService {
         if (args.length > 0) {
             message += ", Аргументы: ";
             for (Object o : args) {
-                message += o.toString() + ", ";
+                try {
+                    message += o.toString() + ", ";
+                } catch (NullPointerException ex) {
+                    ex.printStackTrace();
+                }
             }
         }
         marketLogger.info(message);

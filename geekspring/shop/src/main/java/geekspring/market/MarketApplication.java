@@ -36,7 +36,7 @@ public class MarketApplication implements CommandLineRunner {
 		rabbitProvider.openConnect();
 		rabbitProvider.receiverMsg();
 
-//		mailService.sendMail("web_master.07@mail.ru", "Testing magazine", "java Spring02 from code");
+//		mailService.sendMail("web_master.07@mail.ru", "Testing magazine", "java Spring02 message from magazine");
 	}
 
 }

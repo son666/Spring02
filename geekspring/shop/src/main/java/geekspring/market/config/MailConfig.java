@@ -33,4 +33,8 @@ public class MailConfig {
 
         return mailSender;
     }
+
+    public String getUsername() {
+        return username;
+    }
 }
