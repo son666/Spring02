@@ -1,5 +1,6 @@
 package geekspring.market;
 
+import geekspring.market.services.MailService;
 import geekspring.market.utils.RabbitProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -18,6 +19,10 @@ public class MarketApplication implements CommandLineRunner {
 	private RabbitProvider rabbitProvider;
 
 	@Autowired
+	private MailService mailService;
+
+
+	@Autowired
 	public void setRabbitProvider(RabbitProvider rabbitProvider) {
 		this.rabbitProvider = rabbitProvider;
 	}
@@ -30,6 +35,8 @@ public class MarketApplication implements CommandLineRunner {
 	public void run(String... args) throws Exception {
 		rabbitProvider.openConnect();
 		rabbitProvider.receiverMsg();
+
+//		mailService.sendMail("web_master.07@mail.ru", "Testing magazine", "java Spring02 from code");
 	}
 
 }

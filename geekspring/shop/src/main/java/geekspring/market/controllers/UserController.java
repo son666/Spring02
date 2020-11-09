@@ -76,13 +76,13 @@ public class UserController {
             user = new User();
             user.setId(0L);
         }
-        model.addAttribute("systemUser", user);
+        model.addAttribute("user", user);
         return "/admin-edit-user";
     }
 
     @PostMapping("/edit")
     public String processUserAddForm(@Valid @ModelAttribute("user") SystemUser user, BindingResult theBindingResult, Model model) {
-        if (userService.isUserWithUserNameExists(user.getUserName())) {
+        if (!userService.isUserWithUserNameExists(user.getUserName())) {
             theBindingResult.addError(new ObjectError("status.title", "Пользователь с таким UserName уже существует")); // todo не отображает сообщение
         }
         userService.save(user);

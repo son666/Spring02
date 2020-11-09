@@ -78,6 +78,7 @@ public class UserServiceImpl implements UserService {
         User user = new User();
 
         if (findByUserName(systemUser.getUserName()) != null) {
+            userRepository.save(systemUser);
             return false;
         }
 
