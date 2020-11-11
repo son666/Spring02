@@ -2,6 +2,7 @@ package geekspring.market.controllers;
 
 import geekspring.market.entites.Product;
 import geekspring.market.entites.ProductImage;
+import geekspring.market.entites.User;
 import geekspring.market.services.CategoryService;
 import geekspring.market.services.ImageSaverService;
 import geekspring.market.services.ProductService;
@@ -76,6 +77,16 @@ public class ProductController {
         }
 
         productService.saveProduct(product);
+        return "redirect:/admin";
+    }
+
+    @GetMapping("/delete/{id}")
+    public String processProductDelete(@PathVariable(name = "id") Long id, Model model) {
+        Product product = productService.getProductById(id);
+        if (product == null) {
+            return "redirect:/admin";
+        }
+        productService.deleteProductById(id);
         return "redirect:/admin";
     }
 }

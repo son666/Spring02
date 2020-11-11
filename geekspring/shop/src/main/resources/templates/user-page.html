@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="ctx" th:content="${#httpServletRequest.getContextPath()}"/>
+    <title>Профиль</title>
+    <!-- MDB icon -->
+    <link rel="icon" type="image/png" th:href="@{/favicon.ico}"/>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+    <!-- Bootstrap core CSS -->
+    <link type="text/css" rel="stylesheet" th:href="@{/css/bootstrap.min.css}">
+    <!-- Material Design Bootstrap -->
+    <link type="text/css" rel="stylesheet" th:href="@{/css/mdb.min.css}">
+    <!-- Your custom styles (optional) -->
+    <link type="text/css" rel="stylesheet" th:href="@{/css/style.css}">
+
+  </head>
+
+  <body>
+
+  <!-- Navbar -->
+  <nav class="navbar fixed-top navbar-expand-lg navbar-light white scrolling-navbar">
+    <div class="container">
+
+      <!-- Brand -->
+      <a class="/">
+        <strong class="blue-text">GeekMarket&nbsp; | &nbsp;</strong>
+      </a>
+
+      <div th:replace="~{top-navigation :: navigation(Cart)}" />
+
+    </div>
+  </nav>
+  <!-- Navbar -->
+
+  <!--Main layout-->
+  <main class="mt-5 pt-4">
+    <div class="container my-5 py-3 z-depth-1 rounded">
+
+      <h2>Пользователь: <span th:text="${user.userName}"></span></h2>
+
+      <!-- Default form register -->
+      <form th:action="@{/users/edit}" th:object="${user}" method="post" class="form-horizontal">
+        <input th:field="*{id}" type="hidden" class="form-control">
+        <input th:field="*{userName}" placeholder="username (*)" type="hidden" id="userName" class="form-control pl-2">
+        <input th:field="*{password}" placeholder="password (*)" type="hidden" id="password" class="form-control pl-2">
+
+        <div class="form-group">
+          <div class="col-xs-15">
+            <div th:if="${registrationError != null}">
+              <div class="alert alert-danger col-xs-offset-1 col-xs-10">
+                ${registrationError}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!--Grid row-->
+        <div class="row">
+          <!--Grid column-->
+          <div class="col-md-6 mb-2 ml-3">
+          </div>
+          <!--Grid column-->
+
+        </div>
+        <!--Grid row-->
+
+        <!-- firstName -->
+        <div class="col-md-12 md-form mb-3">
+          <span id="defaultRegisterFormFirstNameHelpBlock" class="form-text text-muted text-left mb-1"><b>FirstName</b></span>
+          <div class="error" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}" />
+          <input th:field="*{firstName}" placeholder="first name (*)" type="text" class="form-control pl-2">
+        </div>
+
+        <!-- Last name -->
+        <div class="col-md-12 md-form mb-5">
+          <span id="defaultRegisterFormLastNameHelpBlock" class="form-text text-muted text-left mb-1"><b>LastName</b></span>
+          <div class="error" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}" />
+          <input th:field="*{lastName}" placeholder="last name (*)" type="text" class="form-control pl-2">
+        </div>
+
+        <!--Email-->
+        <div class="col-md-12 md-form input-group mb-5">
+          <div class="error" th:if="${#fields.hasErrors('email')}" th:errors="*{email}" />
+          <div class="input-group-prepend">
+            <span class="input-group-text pl-2" id="basic-addon1">@</span>
+          </div>
+          <input th:field="*{email}" placeholder="email (*)" type="text" class="form-control py-0 pl-2" aria-describedby="basic-addon1">
+        </div>
+
+        <!--Phone-->
+        <div class="col-md-12 md-form input-group mb-5">
+          <div class="error" th:if="${#fields.hasErrors('phone')}" th:errors="*{phone}" />
+          <div class="input-group-prepend">
+            <span class="input-group-text pl-2" id="basic-phone">Тел.</span>
+          </div>
+          <input th:field="*{phone}" placeholder="phone (*)" type="text" class="form-control py-0 pl-2" aria-describedby="basic-phone">
+        </div>
+
+        <button class="btn btn-primary btn-lg btn-block" type="submit">Сохранить</button>
+
+      </form>
+      <!-- Default form register -->
+      <br>
+      <hr class="mb-4">
+      <h2>История заказов</h2>
+
+      <!--Section: Content-->
+      <section class="dark-grey-text">
+
+        <!-- Shopping Cart table -->
+        <div class="table-responsive">
+
+          <table id="dtBasicExample" class="table table-striped table-bordered" cellspacing="0" width="100%">
+            <thead>
+            <tr>
+              <th class="th-sm">ID
+              </th>
+              <th class="th-sm">Статус заказа
+              </th>
+              <th class="th-sm">Дата формирования
+              </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="order : ${orders}">
+              <td th:text="${order.id}"/>
+              <td>
+                <span th:if="${order.status.id == 1}" th:text="${order.status.title}" class="badge badge-danger" />
+                <span th:if="${order.status.id == 2}" th:text="${order.status.title}" class="badge badge-primary" />
+              </td>
+              <td th:text="${order.createAt}"/>
+
+            </tr>
+            </tbody>
+            <tfoot>
+            <tr>
+              <th class="th-sm">ID
+              </th>
+              <th class="th-sm">Статус заказа
+              </th>
+              <th class="th-sm">Дата формирования
+              </th>
+            </tr>
+            </tfoot>
+          </table>
+
+        </div>
+        <!-- /.Shopping Cart table -->
+
+        <div th:unless="${cart.getItems().size() > 0}" >
+          <span>Ваша корзина пуста</span>
+        </div>
+
+
+      </section>
+      <!--Section: Content-->
+
+
+    </div>
+  </main>
+
+  <!--Footer-->
+  <footer class="page-footer text-center font-small mt-4 wow fadeIn">
+
+    <hr class="my-4">
+
+    <!-- Social icons -->
+    <div class="pb-4">
+      <a href="#">
+        <i class="fab fa-facebook-f mr-3"></i>
+      </a>
+
+      <a href="#">
+        <i class="fab fa-twitter mr-3"></i>
+      </a>
+
+      <a href="#">
+        <i class="fab fa-youtube mr-3"></i>
+      </a>
+
+      <a href="#">
+        <i class="fab fa-google-plus-g mr-3"></i>
+      </a>
+
+      <a href="#">
+        <i class="fab fa-dribbble mr-3"></i>
+      </a>
+
+      <a href="#">
+        <i class="fab fa-pinterest mr-3"></i>
+      </a>
+
+      <a href="#">
+        <i class="fab fa-github mr-3"></i>
+      </a>
+
+      <a href="#">
+        <i class="fab fa-codepen mr-3"></i>
+      </a>
+    </div>
+    <!-- Social icons -->
+
+    <!--Copyright-->
+    <div class="footer-copyright py-3">
+      © 2020 Copyright:
+      <a href="#" target="_blank"> GeekBrains.com </a>
+    </div>
+    <!--/.Copyright-->
+
+  </footer>
+  <!--/.Footer-->
+
+
+    <!-- jQuery -->
+  <script type="text/javascript" th:src="@{/js/jquery-3.4.1.min.js}"></script>
+  <!-- Bootstrap tooltips -->
+  <script type="text/javascript" th:src="@{/js/popper.min.js}"></script>
+  <!-- Bootstrap core JavaScript -->
+  <script type="text/javascript" th:src="@{/js/bootstrap.min.js}"></script>
+  <!-- MDB core JavaScript -->
+  <script type="text/javascript" th:src="@{/js/mdb.min.js}"></script>
+
+  </body>
+
+</html>

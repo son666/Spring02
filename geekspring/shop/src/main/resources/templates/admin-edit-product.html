@@ -73,10 +73,6 @@ position:absolute;
         <a th:href="@{/products/edit/0}" class="list-group-item active waves-effect">
           <i class="fas fa-chart-pie mr-3"></i>Добавить
         </a>
-        <a href="#" class="list-group-item list-group-item-action waves-effect">
-          <i class="fas fa-user mr-3"></i>Редактировать</a>
-        <a href="#" class="list-group-item list-group-item-action waves-effect">
-          <i class="fas fa-table mr-3"></i>Удалить</a>
       </div>
 
     </div>
@@ -111,6 +107,8 @@ position:absolute;
             <!-- Default form register -->
             <form th:action="@{/products/edit}" th:object="${product}" method="post" enctype="multipart/form-data" class="text-center border border-light p-5">
               <input th:field="*{id}" type="hidden" class="form-control">
+              <input th:field="*{createAt}" type="hidden" class="form-control">
+              <input th:field="*{updateAt}" type="hidden" class="form-control">
 
               <div class="form-row mb-4">
                 <div class="col">

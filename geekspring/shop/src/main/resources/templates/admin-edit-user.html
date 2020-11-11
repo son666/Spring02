@@ -138,14 +138,14 @@ position:absolute;
 
               <!-- firstName -->
               <div class="col-md-12 md-form mb-5">
-                <small id="defaultRegisterFormFirstNameHelpBlock" class="form-text text-muted text-left mb-4">FirstName</small>
+                <span id="defaultRegisterFormFirstNameHelpBlock" class="form-text text-muted text-left mb-4"><b>FirstName</b></span>
                 <div class="error" th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}" />
                 <input th:field="*{firstName}" placeholder="first name (*)" type="text" class="form-control pl-2">
               </div>
 
               <!-- Last name -->
               <div class="col-md-12 md-form mb-5">
-                <small id="defaultRegisterFormLastNameHelpBlock" class="form-text text-muted text-left mb-4">LastName</small>
+                <span id="defaultRegisterFormLastNameHelpBlock" class="form-text text-muted text-left mb-4"><b>LastName</b></span>
                 <div class="error" th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}" />
                 <input th:field="*{lastName}" placeholder="last name (*)" type="text" class="form-control pl-2">
               </div>

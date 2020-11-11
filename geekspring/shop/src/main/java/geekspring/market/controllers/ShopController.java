@@ -35,6 +35,7 @@ public class ShopController {
     private ProductService productService;
     private ShoppingCartService shoppingCartService;
     private DeliveryAddressService deliverAddressService;
+    private CategoryService categoryService;
 
     @Autowired
     private Products productsClientService;
@@ -69,6 +70,11 @@ public class ShopController {
         this.mailService = mailService;
     }
 
+    @Autowired
+    public void setCategoryService(CategoryService categoryService) {
+        this.categoryService = categoryService;
+    }
+
     @GetMapping
     public String shopPage(Model model,
                            @RequestParam(value = "page") Optional<Integer> page,
@@ -87,8 +93,8 @@ public class ShopController {
         model.addAttribute("products", products.getItemsProduct());
         model.addAttribute("page", currentPage);
         model.addAttribute("totalPage", products.getTotalPages());
-
         model.addAttribute("filters", products.getFilters().toString());
+        model.addAttribute("categories", categoryService.getAllCategories());
 
         model.addAttribute("min", min);
         model.addAttribute("max", max);

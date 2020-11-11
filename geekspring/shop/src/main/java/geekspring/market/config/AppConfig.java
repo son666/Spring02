@@ -17,7 +17,7 @@ import java.util.Locale;
 public class AppConfig implements WebMvcConfigurer {
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         if (!registry.hasMappingForPattern("/images/**")) {
-            registry.addResourceHandler("/images/**").addResourceLocations("file:/images/");
+            registry.addResourceHandler("/images/**").addResourceLocations("file:./images/");
         }
     }
 

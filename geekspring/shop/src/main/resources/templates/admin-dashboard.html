@@ -73,10 +73,6 @@ position:absolute;
         <a th:href="@{/products/edit/0}" class="list-group-item list-group-item-action waves-effect">
           <i class="fas fa-chart-pie mr-3"></i>Добавить
         </a>
-        <a href="#" class="list-group-item list-group-item-action waves-effect">
-          <i class="fas fa-user mr-3"></i>Редактировать</a>
-        <a href="#" class="list-group-item list-group-item-action waves-effect">
-          <i class="fas fa-table mr-3"></i>Удалить</a>
       </div>
 
     </div>
@@ -120,6 +116,8 @@ position:absolute;
                 </th>
                 <th class="th-sm">Цена
                 </th>
+                <th class="th-sm">Действия
+                </th>
               </tr>
               </thead>
               <tbody>
@@ -129,6 +127,10 @@ position:absolute;
                 <td th:text="${product.category.title}"></td>
                 <td th:text="${product.shortDescription}"></td>
                 <td th:text="${product.price}"></td>
+                <td>
+                  <a th:href="@{'/products/edit/' + ${product.id}}" class="btn btn-primary btn-sm">Редактировать</a>
+                  <a th:href="@{'/products/delete/' + ${product.id}}" class="btn btn-primary btn-sm">Удалить</a>
+                </td>
               </tr>
               </tbody>
               <tfoot>
@@ -142,6 +144,8 @@ position:absolute;
                 <th class="th-sm">Краткое описание
                 </th>
                 <th class="th-sm">Цена
+                </th>
+                <th class="th-sm">Действия
                 </th>
               </tr>
               </tfoot>
