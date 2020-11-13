@@ -74,7 +74,7 @@
 
         <!--Grid column-->
         <div class="col-md-6 mb-4">
-          <img src="https://mdbootstrap.com/img/Photos/Horizontal/E-commerce/Products/14.jpg" class="img-fluid" alt="">
+          <img th:if="${product.images.size() > 0}" th:src="@{'/images/' + ${product.images[0].path}}" class="img-fluid" alt="">
         </div>
         <!--Grid column-->
 

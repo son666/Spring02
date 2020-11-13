@@ -98,8 +98,8 @@
                   <strong th:text="${cartItem.totalPrice}"></strong>
                 </td>
                 <td>
-                  <button type="button" class="btn btn-sm btn-primary" data-toggle="tooltip" data-placement="top" title="Remove item">X
-                  </button>
+                  <a type="button"  th:href="@{'/cart/deleteProduct/' + ${cartItem.product.id}}" class="btn btn-sm btn-primary" data-toggle="tooltip" data-placement="top" title="Remove item">X
+                  </a>
                 </td>
               </tr>
               <!-- /.First row -->

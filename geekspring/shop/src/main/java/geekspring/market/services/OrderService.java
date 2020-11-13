@@ -50,6 +50,10 @@ public class OrderService {
         return orderRepository.findById(id).get();
     }
 
+    public List<Order> findByUserId(Long id) {
+        return orderRepository.findByUserId(id);
+    }
+
     public Order saveOrder(Order order) {
         Order orderOut = orderRepository.save(order);
         orderOut.setConfirmed(true);
